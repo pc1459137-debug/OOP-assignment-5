@@ -1,0 +1,76 @@
+
+//Aim: To write a C++ program demonstrating classes, objects, this pointer, inline function, static member function, and friend class.
+//Design and implement a Student Result Management System
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Result;  // Forward declaration
+
+class Student {
+private:
+    int rollNo;
+    string name;
+    int marks;
+
+public:
+    static int count;
+
+    // Constructor
+    Student(int rollNo, string name, int marks) {
+        this->rollNo = rollNo;
+        this->name = name;
+        this->marks = marks;
+        count++;
+    }
+
+    // Inline function
+    inline void display() {
+        cout << "\nRoll Number: " << rollNo << endl;
+        cout << "Name: " << name << endl;
+        cout << "Marks: " << marks << endl;
+    }
+
+    // Static member function
+    static void displayCount() {
+        cout << "\nTotal Students: " << count << endl;
+    }
+
+    // Friend class declaration
+    friend class Result;
+};
+
+// Initialize static data member
+int Student::count = 0;
+
+// Friend class
+class Result {
+public:
+    void showMarks(Student s) {
+        cout << "\nAccessing private data using Friend Class:"
+             << endl;
+        cout << "Student Marks: " << s.marks << endl;
+    }
+};
+
+int main() {
+    // Creating objects
+    Student s1(47, "Piyush", 85);
+    Student s2(48, "Rahul", 90);
+
+    // Display student details
+    cout << "--- Student Details ---" << endl;
+    s1.display();
+    s2.display();
+
+    // Call static member function
+    Student::displayCount();
+
+    // Access private member using friend class
+    Result r;
+    r.showMarks(s1);
+
+    return 0;
+}
